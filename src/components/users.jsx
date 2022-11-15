@@ -1,14 +1,10 @@
-import api from "../api";
-import {useState} from "react";
 import User from "./user";
 import SearchStatus from "./searchStatus";
 
-const Users = () => {
-    const [users, setUsers] = useState(api.users.fetchAll);
-    const handleDelete = id => setUsers(users.filter(user => user._id !== id));
+const Users = (props) => {
     return (<>
-        <SearchStatus users={users}/>
-        {users.length > 0 && <table className="table">
+        <SearchStatus users={props.users}/>
+        {props.users.length > 0 && <table className="table">
             <thead>
             <tr>
                 <th scope="col">Имя</th>
@@ -17,11 +13,13 @@ const Users = () => {
                 <th scope="col">Встретился, раз</th>
                 <th scope="col">Оценка</th>
                 <th/>
+                <th/>
             </tr>
             </thead>
             <tbody>
-            {users.map(user => <User
-                onDelete={handleDelete}
+            {props.users.map(user => <User
+                onDelete={props.onDelete}
+                onToggleBookmark={props.onToggleBookmark}
                 {...user}
                 key={user._id}
             />)}

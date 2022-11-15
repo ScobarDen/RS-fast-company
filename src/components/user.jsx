@@ -1,4 +1,5 @@
 import Quality from "./quality";
+import Bookmark from "./bookmark";
 
 const User = (props) => {
     return (
@@ -12,6 +13,13 @@ const User = (props) => {
             <td>{props.profession.name}</td>
             <td>{props.completedMeetings}</td>
             <td>{props.rate}</td>
+            <td>
+                <Bookmark
+                    id={props._id}
+                    isFavorite={props.isFavorite}
+                    onToggle={props.onToggleBookmark}
+                />
+            </td>
             <td>
                 <button
                     onClick={() => props.onDelete(props._id)}
