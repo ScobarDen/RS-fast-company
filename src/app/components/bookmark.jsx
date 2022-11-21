@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React from "react";
 
 const BookMark = ({ status, ...rest }) => {

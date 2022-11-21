@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React from "react";
 import Qualitie from "./qualitie";
 import BookMark from "./bookmark";
@@ -10,7 +11,7 @@ const User = ({
     rate,
     onDelete,
     bookmark,
-    onToggleBookMark,
+    onToggleBookMark
 }) => {
     return (
         <tr>
