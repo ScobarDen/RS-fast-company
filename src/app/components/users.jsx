@@ -1,18 +1,18 @@
-/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React, { useState } from "react";
-import User from "./user";
-import Pagination from "./pagination";
+import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
-
-const Users = ({ users, ...rest }) => {
-    const count = users.length;
-    const pageSize = 4;
+import Pagination from "./pagination";
+import User from "./user";
+const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
+    const count = allUsers.length;
+    const pageSize = 4;
+
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
+        console.log("page: ", pageIndex);
     };
-
-    const userCrop = paginate(users, currentPage, pageSize);
+    const usersCrop = paginate(allUsers, currentPage, pageSize);
     return (
         <>
             {count > 0 && (
@@ -21,7 +21,7 @@ const Users = ({ users, ...rest }) => {
                         <tr>
                             <th scope="col">Имя</th>
                             <th scope="col">Качества</th>
-                            <th scope="col">Профессия</th>
+                            <th scope="col">Провфессия</th>
                             <th scope="col">Встретился, раз</th>
                             <th scope="col">Оценка</th>
                             <th scope="col">Избранное</th>
@@ -29,8 +29,8 @@ const Users = ({ users, ...rest }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {userCrop.map((user) => (
-                            <User key={user._id} {...rest} {...user} />
+                        {usersCrop.map((user) => (
+                            <User {...rest} {...user} key={user._id} />
                         ))}
                     </tbody>
                 </table>
@@ -38,11 +38,14 @@ const Users = ({ users, ...rest }) => {
             <Pagination
                 itemsCount={count}
                 pageSize={pageSize}
-                onPageChange={handlePageChange}
                 currentPage={currentPage}
+                onPageChange={handlePageChange}
             />
         </>
     );
+};
+Users.propTypes = {
+    users: PropTypes.array
 };
 
 export default Users;

@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React from "react";
-
+import PropTypes from "prop-types";
 const SearchStatus = ({ length }) => {
     const renderPhrase = (number) => {
         const lastOne = Number(number.toString().slice(-1));
@@ -22,6 +21,9 @@ const SearchStatus = ({ length }) => {
             </span>
         </h2>
     );
+};
+SearchStatus.propTypes = {
+    length: PropTypes.number
 };
 
 export default SearchStatus;
