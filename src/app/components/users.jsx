@@ -8,26 +8,46 @@ import api from "../api";
 
 const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [professions, setProfessions] = useState([]);
+    const [professions, setProfessions] = useState();
+    const [selectedProf, setSelectedProf] = useState();
     const count = allUsers.length;
     const pageSize = 4;
 
     useEffect(() => {
-        api.professions.fetchAll().then((data) => setProfessions(data));
+        api.professions.fetchAll().then((data) =>
+            setProfessions(data));
     }, []);
 
-    const handleProfessionSelect = () => {};
+    const handleProfessionSelect = (item) => {
+        setSelectedProf(item);
+    };
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
-        console.log("page: ", pageIndex);
     };
-    const usersCrop = paginate(allUsers, currentPage, pageSize);
+
+    const filteredUsers =
+        selectedProf
+            ? allUsers.filter((user) => user.profession === selectedProf)
+            : allUsers;
+
+    const usersCrop = paginate(filteredUsers, currentPage, pageSize);
+
+    const clearFilter = () => {
+        setSelectedProf();
+    };
+
     return (
         <>
-            <GroupList
-                items={professions}
-                onItemSelect={handleProfessionSelect}
-            />
+            {professions && (
+                <>
+                    <GroupList
+                        selectedItem={selectedProf}
+                        items={professions}
+                        onItemSelect={handleProfessionSelect}
+                    />
+                    <button className="btn btn-secondary mt-2" onClick={clearFilter}>Очистить</button>
+                </>
+            )}
             {count > 0 && (
                 <table className="table">
                     <thead>
