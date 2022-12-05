@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
-import User from "./user";
 import GroupList from "./groupList";
 import api from "../api";
 import SearchStatus from "./searchStatus";
+import UserTable from "./usersTable";
 
 const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +29,10 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
+        ? allUsers.filter((user) =>
+            JSON.stringify(user.profession) ===
+            JSON.stringify(selectedProf)
+        )
         : allUsers;
     const count = filteredUsers.length;
 
@@ -58,27 +61,7 @@ const Users = ({ users: allUsers, ...rest }) => {
             )}
             <div className="d-flex flex-column flex-fill">
                 <SearchStatus length={count} />
-                {count > 0 && (
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Имя</th>
-                                <th scope="col">Качества</th>
-                                <th scope="col">Профессия</th>
-                                <th scope="col">Встретился, раз</th>
-                                <th scope="col">Оценка</th>
-                                <th scope="col">Избранное</th>
-                                <th />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {usersCrop.map((user) => (
-                                <User {...rest} {...user} key={user._id} />
-                            ))}
-                        </tbody>
-                    </table>
-                )}
-
+                {count > 0 && <UserTable users={usersCrop} {...rest} />}
                 <div className="d-flex justify-content-center">
                     <Pagination
                         itemsCount={count}
