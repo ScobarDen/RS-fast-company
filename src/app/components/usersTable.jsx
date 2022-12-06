@@ -1,43 +1,31 @@
-import User from "./user";
+// import User from "./user";
 import React from "react";
 import PropTypes from "prop-types";
+import TableHeader from "./tableHeader";
+import TableBody from "./tableBody";
 
-const UserTable = ({ users, onSort, ...rest }) => {
+const UserTable = ({ users, onSort, sortBy, ...rest }) => {
+    const columns = {
+        name: { path: "name", name: "Имя" },
+        qualities: { name: "Качества" },
+        professions: { path: "profession.name", name: "Профессия" },
+        completedMeetings: { path: "completedMeetings", name: "Встретился, раз" },
+        rate: { path: "rate", name: "Оценка" },
+        bookmark: { path: "bookmark", name: "Избранное" },
+        delete: {}
+    };
     return (
         <table className="table">
-            <thead>
-                <tr>
-                    <th onClick={() => onSort("name")} scope="col">
-                        Имя
-                    </th>
-                    <th scope="col">Качества</th>
-                    <th onClick={() => onSort("profession.name")} scope="col">
-                        Профессия
-                    </th>
-                    <th onClick={() => onSort("completedMeetings")} scope="col">
-                        Встретился, раз
-                    </th>
-                    <th onClick={() => onSort("rate")} scope="col">
-                        Оценка
-                    </th>
-                    <th onClick={() => onSort("bookmark")} scope="col">
-                        Избранное
-                    </th>
-                    <th />
-                </tr>
-            </thead>
-            <tbody>
-                {users.map((user) => (
-                    <User {...rest} {...user} key={user._id} />
-                ))}
-            </tbody>
+            <TableHeader onSort={onSort} selectedSort={sortBy} columns={columns} />
+            <TableBody columns={columns} data={users} />
         </table>
     );
 };
 
 UserTable.propTypes = {
     users: PropTypes.array.isRequired,
-    onSort: PropTypes.func.isRequired
+    onSort: PropTypes.func.isRequired,
+    sortBy: PropTypes.object.isRequired
 };
 
 export default UserTable;
