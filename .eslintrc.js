@@ -14,7 +14,7 @@ module.exports = {
     plugins: ["react"],
     rules: {
         semi: [2, "always"],
-        indent: ["error", 4],
+        indent: [0, 4],
         "space-before-function-paren": [
             "error",
             { anonymous: "always", named: "never" }

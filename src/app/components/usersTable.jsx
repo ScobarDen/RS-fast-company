@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import BookMark from "./bookmark";
 import QualitiesList from "./qualitiesList";
 import Table from "./table";
@@ -7,9 +8,10 @@ import Table from "./table";
 const UserTable = ({
     users,
     onSort,
-    sortBy,
+    selectedSort,
     onToggleBookMark,
-    onDelete
+    onDelete,
+    ...rest
 }) => {
     const columns = {
         name: { path: "name", name: "Имя" },
@@ -47,17 +49,17 @@ const UserTable = ({
     return (
         <Table
             onSort={onSort}
-            selectedSort={sortBy}
+            selectedSort={selectedSort}
             columns={columns}
             data={users}
-        ></Table>
+        />
     );
 };
 
 UserTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
-    sortBy: PropTypes.object.isRequired,
+    selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired
 };
