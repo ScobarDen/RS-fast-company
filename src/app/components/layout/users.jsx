@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { paginate } from "../utils/paginate";
-import Pagination from "./pagination";
-import api from "../api";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UserTable from "./usersTable";
+import { paginate } from "../../utils/paginate";
+import Pagination from "../pagination";
+import api from "../../api";
+import GroupList from "../groupList";
+import SearchStatus from "../searchStatus";
+import UserTable from "../usersTable";
 import _ from "lodash";
+import { useParams } from "react-router-dom";
+import UserPage from "./user";
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
+    const { userId } = useParams();
 
     const [users, setUsers] = useState();
     useEffect(() => {
@@ -60,11 +63,19 @@ const Users = () => {
             : users;
 
         const count = filteredUsers.length;
-        const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+        const sortedUsers = _.orderBy(
+            filteredUsers,
+            [sortBy.path],
+            [sortBy.order]
+        );
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
         const clearFilter = () => {
             setSelectedProf();
         };
+
+        if (userId) {
+            return <UserPage userId={userId} />;
+        }
 
         return (
             <div className="d-flex">
