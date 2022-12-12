@@ -19,7 +19,7 @@ const UserTable = ({
             path: "name",
             name: "Имя",
             component: (user) => {
-                return <Link to={`/users/${user.id}`}>{user.name}</Link>;
+                return <Link to={`/users/${user._id}`}>{user.name}</Link>;
             }
         },
         qualities: {

@@ -8,7 +8,7 @@ import SearchStatus from "../searchStatus";
 import UserTable from "../usersTable";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
-import UserPage from "./user";
+import UserPage from "../user";
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
