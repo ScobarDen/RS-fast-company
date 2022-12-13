@@ -7,7 +7,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
-const Users = () => {
+const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -60,7 +60,11 @@ const Users = () => {
             : users;
 
         const count = filteredUsers.length;
-        const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+        const sortedUsers = _.orderBy(
+            filteredUsers,
+            [sortBy.path],
+            [sortBy.order]
+        );
         const usersCrop = paginate(sortedUsers, currentPage, pageSize);
         const clearFilter = () => {
             setSelectedProf();
@@ -80,7 +84,7 @@ const Users = () => {
                             onClick={clearFilter}
                         >
                             {" "}
-                            Очистить
+                            Очиститть
                         </button>
                     </div>
                 )}
@@ -109,8 +113,8 @@ const Users = () => {
     }
     return "loading...";
 };
-Users.propTypes = {
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
