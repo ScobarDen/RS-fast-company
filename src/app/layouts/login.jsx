@@ -9,8 +9,12 @@ const Login = () => {
             [target.name]: target.value
         }));
     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(data);
+    };
     return (
-        <form action="">
+        <form onSubmit={handleSubmit}>
             <TextField
                 name="email"
                 value={data.email}
@@ -24,6 +28,9 @@ const Login = () => {
                 label="Пароль"
                 onChange={handleChange}
             />
+            <button type="submit" className="btn btn-dark">
+                Submit
+            </button>
         </form>
     );
 };
