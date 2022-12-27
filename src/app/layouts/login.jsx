@@ -5,6 +5,7 @@ import { validator } from "../utils/validator";
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
+    const isValid = Object.keys(errors).length === 0;
 
     const validate = () => {
         const errors = validator(data, validatorConfig);
@@ -36,6 +37,16 @@ const Login = () => {
         password: {
             isRequired: {
                 message: "Пароль обязателен для заполнения"
+            },
+            isCapital: {
+                message: "Пароль должен содержать хотя бы одну заглавную букву"
+            },
+            isDigit: {
+                message: "Пароль должен содержать хотя-бы одну цифру"
+            },
+            min: {
+                message: `Пароль должен состоять минимум из 8 символов`,
+                value: 8
             }
         }
     };
@@ -61,7 +72,7 @@ const Login = () => {
                 onChange={handleChange}
                 error={errors.password}
             />
-            <button type="submit" className="btn btn-dark">
+            <button type="submit" className="btn btn-dark" disabled={!isValid}>
                 Submit
             </button>
         </form>
