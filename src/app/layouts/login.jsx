@@ -39,6 +39,7 @@ const Login = () => {
                 value={data.email}
                 label="Email"
                 onChange={handleChange}
+                error={errors.email}
             />
             <TextField
                 name="password"
@@ -46,6 +47,7 @@ const Login = () => {
                 value={data.password}
                 label="Пароль"
                 onChange={handleChange}
+                error={errors.password}
             />
             <button type="submit" className="btn btn-dark">
                 Submit
