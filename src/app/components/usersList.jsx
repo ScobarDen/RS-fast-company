@@ -7,10 +7,13 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import Search from "./search";
+
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
+    const [searchValue, setSearchValue] = useState("");
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
@@ -37,10 +40,11 @@ const UsersList = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchValue]);
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
+        setSearchValue("");
     };
 
     const handlePageChange = (pageIndex) => {
@@ -50,12 +54,23 @@ const UsersList = () => {
         setSortBy(item);
     };
 
+    const handleSearch = (e) => {
+        setSearchValue(e.target.value);
+        setSelectedProf();
+    };
+
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
                       JSON.stringify(selectedProf)
+              )
+            : searchValue
+            ? users.filter((user) =>
+                  user.name
+                      .toLowerCase()
+                      .includes(searchValue.trim().toLowerCase())
               )
             : users;
 
@@ -90,6 +105,7 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <Search {...{ searchValue, handleSearch }} />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
