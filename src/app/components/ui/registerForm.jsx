@@ -92,7 +92,7 @@ const RegisterForm = () => {
                 options={professions}
                 value={data.profession._id}
                 label="Выберете вашу профессию"
-                defaultOption="Профессия"
+                defaultOption="Профессия..."
                 error={errors.profession}
             />
             <button
