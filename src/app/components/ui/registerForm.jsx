@@ -15,8 +15,10 @@ const RegisterForm = () => {
     const [errors, setErrors] = useState({});
     const isValid = Object.keys(errors).length === 0;
     const [professions, setProfession] = useState({});
+    const [qualities, setQualities] = useState({});
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
+        api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
 
     const validate = () => {
