@@ -4,13 +4,15 @@ import { validator } from "../../utils/validator";
 import api from "../../api";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
+import MultiSelectField from "../common/form/multiSelectField";
 
 const RegisterForm = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
         profession: "",
-        sex: "male"
+        sex: "male",
+        qualities: []
     });
     const [errors, setErrors] = useState({});
     const isValid = Object.keys(errors).length === 0;
@@ -26,7 +28,7 @@ const RegisterForm = () => {
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
-    const handleChange = ({ target }) => {
+    const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
@@ -112,6 +114,11 @@ const RegisterForm = () => {
                 name="sex"
                 onChange={handleChange}
                 label="Выберете пол"
+            />
+            <MultiSelectField
+                options={qualities}
+                handleChange={handleChange}
+                name="qualities"
             />
             <button
                 type="submit"
