@@ -14,7 +14,7 @@ const EditUserPage = () => {
     const user = users[userIndex];
     const [data, setData] = useState({
         email: user.email,
-        profession: "",
+        profession: user.profession._id,
         sex: user.sex,
         qualities: []
     });
