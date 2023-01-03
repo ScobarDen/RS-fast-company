@@ -12,11 +12,21 @@ const EditUserPage = () => {
     const users = JSON.parse(localStorage.getItem("users"));
     const userIndex = users.findIndex((u) => u._id === userId);
     const user = users[userIndex];
+    const parseQualitiesFromUser = (userObject) => {
+        return userObject.qualities.map((qualitie) => {
+            return {
+                color: qualitie.color,
+                label: qualitie.name,
+                value: qualitie._id
+            };
+        });
+    };
+    console.log(user);
     const [data, setData] = useState({
         email: user.email,
         profession: user.profession._id,
         sex: user.sex,
-        qualities: []
+        qualities: parseQualitiesFromUser(user)
     });
     const [qualities, setQualities] = useState([]);
     const [professions, setProfession] = useState([]);

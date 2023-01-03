@@ -6,7 +6,6 @@ import EditUserPage from "../components/page/editUserPage";
 
 const Login = () => {
     const { type, userId } = useParams();
-    console.log(type, userId);
     const [formType, setFormType] = useState(
         type === "register" ? type : "login"
     );
