@@ -9,11 +9,15 @@ import { useParams } from "react-router-dom";
 
 const EditUserPage = () => {
     const { userId } = useParams();
-    const users = JSON.parse(localStorage.getItem("users"));
-    const userIndex = users.findIndex((u) => u._id === userId);
-    const user = users[userIndex];
-    const parseQualitiesFromUser = (userObject) => {
-        return userObject.qualities.map((qualitie) => {
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        api.users.getById(userId).then((dataUser) => setUser(dataUser));
+    }, []);
+    // const users = JSON.parse(localStorage.getItem("users"));
+    // const userIndex = users.findIndex((u) => u._id === userId);
+    // const user = users[userIndex];
+    const parseQualitiesFromUser = () => {
+        return user.qualities.map((qualitie) => {
             return {
                 color: qualitie.color,
                 label: qualitie.name,
@@ -22,11 +26,21 @@ const EditUserPage = () => {
         });
     };
     const [data, setData] = useState({
-        email: user.email,
-        profession: user.profession._id,
-        sex: user.sex,
-        qualities: parseQualitiesFromUser(user)
+        email: "",
+        profession: "",
+        sex: "",
+        qualities: []
     });
+    useEffect(() => {
+        user.sex &&
+            setData({
+                email: user.email,
+                profession: user.profession._id,
+                sex: user.sex,
+                qualities: parseQualitiesFromUser()
+            });
+    }, [user]);
+
     const [qualities, setQualities] = useState([]);
     const [professions, setProfession] = useState([]);
     const [errors, setErrors] = useState({});
