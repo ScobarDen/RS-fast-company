@@ -21,7 +21,6 @@ const EditUserPage = () => {
             };
         });
     };
-    console.log(user);
     const [data, setData] = useState({
         email: user.email,
         profession: user.profession._id,
@@ -109,6 +108,11 @@ const EditUserPage = () => {
         if (!isValid) return;
         const { profession, qualities } = data;
         console.log({
+            ...data,
+            profession: getProfessionById(profession),
+            qualities: getQualities(qualities)
+        });
+        api.users.update(userId, {
             ...data,
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
