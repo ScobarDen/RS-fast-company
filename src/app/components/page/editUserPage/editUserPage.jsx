@@ -22,21 +22,28 @@ const EditUserPage = () => {
 
     useEffect(() => {
         api.users.getById(userId).then((user) => {
+            console.log(user);
             setData((prevState) => ({
                 ...prevState,
+                name: user.name,
                 email: user.email,
                 profession: user.profession._id,
                 sex: user.sex,
-                qualities: parseQualitiesFromUser(user)
+                qualities: parseQualitiesFromUser(user),
+                rate: user.rate.toString(),
+                completedMeetings: user.completedMeetings.toString()
             }));
         });
     }, []);
 
     const [data, setData] = useState({
+        name: "",
         email: "",
         profession: "",
         sex: "",
-        qualities: []
+        qualities: [],
+        rate: "1",
+        completedMeetings: "0"
     });
 
     const [qualities, setQualities] = useState([]);
@@ -102,6 +109,39 @@ const EditUserPage = () => {
             isRequired: {
                 message: "Обязательно выберите вашу профессию"
             }
+        },
+        name: {
+            isRequired: {
+                message: "Имя обязательно для заполнения"
+            }
+        },
+        rate: {
+            isRequired: {
+                message: "Оценка обязательна для заполнения"
+            },
+            minValue: {
+                value: 1,
+                message: "Значение должно быть больше 0"
+            },
+            maxValue: {
+                value: 6,
+                message: "Значение должно быть меньше 6"
+            },
+            isOneNumber: {
+                message: "Значение должно быть числом"
+            }
+        },
+        completedMeetings: {
+            isRequired: {
+                message: "Количество встреч обязательно для заполнения"
+            },
+            minValue: {
+                value: 0,
+                message: "Значение должно быть больше или равно 0"
+            },
+            isOneNumber: {
+                message: "Значение должно быть числом"
+            }
         }
     };
     useEffect(() => {
@@ -133,6 +173,27 @@ const EditUserPage = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <TextField
+                label="Имя"
+                name="name"
+                value={data.name}
+                onChange={handleChange}
+                error={errors.name}
+            />
+            <TextField
+                label="Оценка"
+                name="rate"
+                value={data.rate}
+                onChange={handleChange}
+                error={errors.rate}
+            />
+            <TextField
+                label="Встретился, раз"
+                name="completedMeetings"
+                value={data.completedMeetings}
+                onChange={handleChange}
+                error={errors.completedMeetings}
+            />
             <TextField
                 label="Электронная почта"
                 name="email"
