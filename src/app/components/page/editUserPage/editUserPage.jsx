@@ -9,37 +9,35 @@ import { useParams } from "react-router-dom";
 
 const EditUserPage = () => {
     const { userId } = useParams();
-    const [user, setUser] = useState({});
-    useEffect(() => {
-        api.users.getById(userId).then((dataUser) => setUser(dataUser));
-    }, []);
-    // const users = JSON.parse(localStorage.getItem("users"));
-    // const userIndex = users.findIndex((u) => u._id === userId);
-    // const user = users[userIndex];
-    const parseQualitiesFromUser = () => {
+
+    const parseQualitiesFromUser = (user) => {
         return user.qualities.map((qualitie) => {
             return {
-                color: qualitie.color,
+                value: qualitie._id,
                 label: qualitie.name,
-                value: qualitie._id
+                color: qualitie.color
             };
         });
     };
+
+    useEffect(() => {
+        api.users.getById(userId).then((user) => {
+            setData((prevState) => ({
+                ...prevState,
+                email: user.email,
+                profession: user.profession._id,
+                sex: user.sex,
+                qualities: parseQualitiesFromUser(user)
+            }));
+        });
+    }, []);
+
     const [data, setData] = useState({
         email: "",
         profession: "",
         sex: "",
         qualities: []
     });
-    useEffect(() => {
-        user.sex &&
-            setData({
-                email: user.email,
-                profession: user.profession._id,
-                sex: user.sex,
-                qualities: parseQualitiesFromUser()
-            });
-    }, [user]);
 
     const [qualities, setQualities] = useState([]);
     const [professions, setProfession] = useState([]);
@@ -132,6 +130,7 @@ const EditUserPage = () => {
             qualities: getQualities(qualities)
         });
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <TextField
