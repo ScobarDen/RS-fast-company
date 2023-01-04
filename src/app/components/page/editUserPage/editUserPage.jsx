@@ -5,10 +5,11 @@ import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const EditUserPage = () => {
     const { userId } = useParams();
+    const history = useHistory();
 
     const parseQualitiesFromUser = (user) => {
         return user.qualities.map((qualitie) => {
@@ -169,6 +170,7 @@ const EditUserPage = () => {
             profession: getProfessionById(profession),
             qualities: getQualities(qualities)
         });
+        history.push(`/users`);
     };
 
     return (
