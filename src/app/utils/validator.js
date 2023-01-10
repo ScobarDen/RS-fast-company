@@ -1,6 +1,5 @@
 export function validator(data, config) {
     const errors = {};
-
     function validate(validateMethod, data, config) {
         let statusValidate;
         switch (validateMethod) {
@@ -31,25 +30,11 @@ export function validator(data, config) {
                 statusValidate = data.length < config.value;
                 break;
             }
-            case "minValue": {
-                statusValidate = Number(data) < config.value;
-                break;
-            }
-            case "maxValue": {
-                statusValidate = Number(data) > config.value;
-                break;
-            }
-            case "isOneNumber": {
-                const numberRegExp = /^0+\d+$/g;
-                statusValidate = !Number(data) || numberRegExp.test(data);
-                break;
-            }
             default:
                 break;
         }
         if (statusValidate) return config.message;
     }
-
     for (const fieldName in data) {
         for (const validateMethod in config[fieldName]) {
             const error = validate(

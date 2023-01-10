@@ -9,7 +9,7 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
             : options;
 
     const handleChange = (value) => {
-        onChange({ name, value });
+        onChange({ name: name, value });
     };
     return (
         <div className="mb-4">
@@ -17,12 +17,12 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
             <Select
                 isMulti
                 closeMenuOnSelect={false}
+                defaultValue={defaultValue}
                 options={optionsArray}
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={handleChange}
                 name={name}
-                value={defaultValue}
             />
         </div>
     );
