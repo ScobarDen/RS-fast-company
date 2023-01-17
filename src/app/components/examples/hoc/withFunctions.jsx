@@ -2,7 +2,7 @@ import React from "react";
 import CardWrapper from "../../common/Card";
 
 const withFunctions = (Component) => (props) => {
-    const isAuth = localStorage.getItem("auth");
+    const isAuth = !!localStorage.getItem("auth");
     const onLogin = () => {
         localStorage.setItem("auth", "token");
     };
