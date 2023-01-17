@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Collapse as BsCollapse } from "bootstrap";
 import PropTypes from "prop-types";
+
 const CollapseWrapper = ({ children, title, name }) => {
     const [display, setDisaplay] = useState(false);
     const collapseRef = useRef();
@@ -28,7 +29,13 @@ const CollapseWrapper = ({ children, title, name }) => {
                     ></i>
                 </div>
                 <div className="collapse" ref={collapseRef} id={name + title}>
-                    {children}
+                    {React.Children.map(children, (child, index) => {
+                        const config = {
+                            ...child.props,
+                            number: index
+                        };
+                        return React.cloneElement(child, config);
+                    })}
                 </div>
             </div>
         </div>
