@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { validator } from "../../../utils/validator";
 /* eslint react/prop-types: 0 */
-const FormComponent = ({ children, validatorConfig, onSubmit, defaultData }) => {
+const FormComponent = ({
+    children,
+    validatorConfig,
+    onSubmit,
+    defaultData
+}) => {
     const [data, setData] = useState({});
     const [errors, setErrors] = useState({});
     useEffect(() => {
@@ -13,23 +18,29 @@ const FormComponent = ({ children, validatorConfig, onSubmit, defaultData }) => 
             validate();
         }
     }, [data]);
-    const handleChange = (target) => {
-        setData((prevState) => ({
-            ...prevState,
-            [target.name]: target.value
-        }));
-    };
+    const handleChange = useCallback(
+        (target) => {
+            setData((prevState) => ({
+                ...prevState,
+                [target.name]: target.value
+            }));
+        },
+        [setData]
+    );
     const isValid = Object.keys(errors).length === 0;
 
-    const validate = () => {
-        const errors = validator(data, validatorConfig);
-        setErrors(errors);
-        return Object.keys(errors).length === 0;
-    };
+    const validate = useCallback(
+        (data) => {
+            const errors = validator(data, validatorConfig);
+            setErrors(errors);
+            return Object.keys(errors).length === 0;
+        },
+        [validatorConfig, setErrors]
+    );
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const isValid = validate();
+        const isValid = validate(data);
         if (!isValid) return;
         onSubmit(data);
     };
@@ -47,7 +58,7 @@ const FormComponent = ({ children, validatorConfig, onSubmit, defaultData }) => 
                 }
             }
         }
-        if (childType === "function") {
+        if (childType === "object") {
             config = {
                 ...child.props,
                 onChange: handleChange,
