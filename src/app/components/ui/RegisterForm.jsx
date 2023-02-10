@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
-import TextField from "../common/form/textField";
+import TextField from "../common/form/TextField";
 import api from "../../api";
-import SelectField from "../common/form/selectField";
-import RadioField from "../common/form/radioField";
-import MultiSelectField from "../common/form/multiSelectField";
-import CheckBoxField from "../common/form/checkBoxField";
+import SelectField from "../common/form/SelectField";
+import RadioField from "../common/form/RadioField";
+import MultiSelectField from "../common/form/MultiSelectField";
+import CheckBoxField from "../common/form/CheckBoxField";
 
 const RegisterForm = () => {
     const [data, setData] = useState({
@@ -76,9 +76,7 @@ const RegisterForm = () => {
             }
         },
         password: {
-            isRequired: {
-                message: "Пароль обязателен для заполнения"
-            },
+            isRequired: { message: "Пароль обязателен для заполнения" },
             isCapitalSymbol: {
                 message: "Пароль должен содержать хотя бы одну заглавную букву"
             },
@@ -92,7 +90,7 @@ const RegisterForm = () => {
         },
         profession: {
             isRequired: {
-                message: "Обязательно выберите вашу профессию"
+                message: "Обязательно выберите Вашу профессию"
             }
         },
         licence: {
@@ -102,6 +100,7 @@ const RegisterForm = () => {
             }
         }
     };
+
     useEffect(() => {
         validate();
     }, [data]);

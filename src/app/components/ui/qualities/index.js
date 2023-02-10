@@ -1,2 +1,3 @@
-import Qualities from "./qualitiesList";
-export default Qualities;
+import QualitiesList from "./QualitiesList";
+
+export default QualitiesList;

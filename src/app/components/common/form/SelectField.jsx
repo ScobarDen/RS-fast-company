@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -13,10 +14,10 @@ const SelectField = ({
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
+
     const getInputClasses = () => {
         return "form-select" + (error ? " is-invalid" : "");
     };
-
     const optionsArray =
         !Array.isArray(options) && typeof options === "object"
             ? Object.values(options)
@@ -37,7 +38,7 @@ const SelectField = ({
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {optionsArray.length > 0 &&
+                {optionsArray &&
                     optionsArray.map((option) => (
                         <option value={option.value} key={option.value}>
                             {option.label}
@@ -48,15 +49,14 @@ const SelectField = ({
         </div>
     );
 };
-
 SelectField.propTypes = {
     defaultOption: PropTypes.string,
+    name: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string,
-    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    name: PropTypes.string
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default SelectField;

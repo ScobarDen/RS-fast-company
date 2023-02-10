@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const NavBar = () => {
+
+const Navbar = () => {
     return (
         <ul className="nav">
             <li className="nav-item">
-                <Link className="nav-link " aria-current="page" to="/">
+                <Link to="/" className="nav-link active" aria-current="page">
                     Main
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link " aria-current="page" to="/login">
+                <Link to="/login" className="nav-link">
                     Login
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link " aria-current="page" to="/users">
+                <Link to="/users" className="nav-link">
                     Users
                 </Link>
             </li>
@@ -22,4 +23,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default Navbar;

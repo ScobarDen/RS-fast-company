@@ -22,7 +22,7 @@ export function validator(data, config) {
                 break;
             }
             case "isContainDigit": {
-                const digitRegExp = /\d+/g;
+                const digitRegExp = /\d+/;
                 statusValidate = !digitRegExp.test(data);
                 break;
             }
