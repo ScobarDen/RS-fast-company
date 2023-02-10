@@ -1,7 +1,10 @@
 module.exports = {
     env: {
-        browser: true,
+        browser: false,
         es2021: true
+    },
+    globals: {
+        localStorage: true
     },
     extends: ["plugin:react/recommended", "standard"],
     parserOptions: {
