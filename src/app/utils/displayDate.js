@@ -3,7 +3,7 @@ export function displayDate(data) {
     const dateNow = new Date();
     const yearDif = dateNow.getFullYear() - date.getFullYear();
     if (yearDif === 0) {
-        const dayDif = dateNow.getHours() - date.getHours();
+        const dayDif = dateNow.getDate() - date.getDate();
         if (dayDif === 0) {
             const hourDif = dateNow.getHours() - date.getHours();
             if (hourDif === 0) {
@@ -18,10 +18,8 @@ export function displayDate(data) {
             }
             return `${date.getHours()}:${date.getMinutes()}`;
         }
-        return date.toLocaleString("default", {
-            month: "long",
-            day: "numeric"
-        });
+
+        return date.toLocaleString("default", { month: "long", day: "numeric" });
     }
     return (
         date.getFullYear() + "." + (date.getMonth() + 1) + "_" + date.getDate()
