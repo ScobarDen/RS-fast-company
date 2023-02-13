@@ -6,26 +6,27 @@ axios.defaults.baseURL = configFile.apiEndpoint;
 
 axios.interceptors.request.use(
     function (config) {
-        if (config.isFirebase) {
+        if (configFile.isFireBase) {
             const containSlash = /\/$/gi.test(config.url);
-            config.url = containSlash
-                ? config.url.slice(0, -1)
-                : config.url + ".json";
+            config.url =
+                (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
         }
         return config;
     },
     function (error) {
-        // Do something with request error
         return Promise.reject(error);
     }
 );
-
 function transformData(data) {
-    return data ? Object.keys(data).map((key) => ({ ...data[key] })) : [];
+    return data
+        ? Object.keys(data).map((key) => ({
+              ...data[key]
+          }))
+        : [];
 }
 axios.interceptors.response.use(
     (res) => {
-        if (configFile.isFirebase) {
+        if (configFile.isFireBase) {
             res.data = { content: transformData(res.data) };
         }
         return res;
