@@ -18,6 +18,7 @@ const EXPIRES_KEY = "jwt-expires";
 const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
     const [error, setError] = useState(null);
+    console.log(process.env);
 
     useEffect(() => {
         if (error !== null) {
@@ -34,8 +35,7 @@ const AuthProvider = ({ children }) => {
     }
 
     async function signUp({ email, password, ...rest }) {
-        const key = "AIzaSyD7g9gZos8l7SIHgZJmQcboLDZGbrjRZ5Q ";
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`;
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
         try {
             const { data } = await httpAuth.post(url, {
                 email,
