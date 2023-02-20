@@ -35,6 +35,15 @@ const AuthProvider = ({ children }) => {
             console.log(data);
         } catch (e) {
             errorCatcher(e);
+            const { code, message } = e.response.data.error;
+            if (code === 400) {
+                if (message === "EMAIL_EXISTS") {
+                    const errorObject = {
+                        email: "Пользователь с таким email уже существует"
+                    };
+                    throw errorObject;
+                }
+            }
         }
     }
 
