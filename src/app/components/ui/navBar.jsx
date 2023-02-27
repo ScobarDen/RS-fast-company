@@ -28,15 +28,13 @@ const NavBar = () => {
                     {currentUser ? (
                         <p>User</p>
                     ) : (
-                        <li className="nav-item">
-                            <Link
-                                className="nav-link "
-                                aria-current="page"
-                                to="/login"
-                            >
-                                Login
-                            </Link>
-                        </li>
+                        <Link
+                            className="nav-link "
+                            aria-current="page"
+                            to="/login"
+                        >
+                            Login
+                        </Link>
                     )}
                 </div>
             </div>
