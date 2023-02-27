@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import userService from "../services/user.service";
 import { toast } from "react-toastify";
-import { setTokens } from "../services/localStorage.service";
+import localStorageService, {
+    setTokens
+} from "../services/localStorage.service";
 
 const httpAuth = axios.create();
 const AuthContext = React.createContext();
@@ -21,6 +23,19 @@ const AuthProvider = ({ children }) => {
             setError(null);
         }
     }, [error]);
+
+    async function getUserData() {
+        try {
+            const { content } = await userService.getCurrentUser();
+            setCurrentUser(content);
+        } catch (e) {}
+    }
+
+    useEffect(async () => {
+        if (localStorageService.getAccessToken()) {
+            await getUserData();
+        }
+    }, []);
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -65,6 +80,7 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
+            await getUserData();
         } catch (e) {
             errorCatcher(e);
             const { code, message } = e.response.data.error;
@@ -88,7 +104,6 @@ const AuthProvider = ({ children }) => {
     async function createUser(data) {
         try {
             const { content } = await userService.create(data);
-            console.log(content);
             setCurrentUser(content);
         } catch (error) {
             errorCatcher(error);
