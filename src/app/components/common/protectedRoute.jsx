@@ -12,7 +12,7 @@ export const ProtectedRoute = ({ component: Component, children, ...rest }) => {
                 if (!currentUser) {
                     return <Redirect to="/login" />;
                 }
-                return Component ? <Component /> : children;
+                return Component ? <Component {...props} /> : children;
             }}
         />
     );
