@@ -17,13 +17,10 @@ http.interceptors.request.use(
             const expiresDate = localStorageService.getExpiresToken();
             const refreshToken = localStorageService.getRefreshToken();
             if (refreshToken && expiresDate < Date.now()) {
-                const { data } = await httpAuth.post(
-                    `https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_FIREBASE_KEY}`,
-                    {
-                        grant_type: "refresh_token",
-                        refresh_token: refreshToken
-                    }
-                );
+                const { data } = await httpAuth.post(`token`, {
+                    grant_type: "refresh_token",
+                    refresh_token: refreshToken
+                });
                 localStorageService.setTokens({
                     refreshToken: data.refresh_token,
                     idToken: data.id_token,
@@ -31,11 +28,10 @@ http.interceptors.request.use(
                     expiresIn: data.expires_in
                 });
             }
-            // const accessToken = localStorageService.getAccessToken();
-            // if (accessToken) {
-            //     console.log(config.params);
-            //     config.params = { ...config.params, auth: accessToken };
-            // }
+            const accessToken = localStorageService.getAccessToken();
+            if (accessToken) {
+                config.params = { ...config.params, auth: accessToken };
+            }
         }
         return config;
     },
