@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { validator } from "../../../utils/validator";
-import api from "../../../api";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-// import { useProfessions } from "../../../hooks/useProfession";
+import { useProfessions } from "../../../hooks/useProfession";
 import { useQualities } from "../../../hooks/useQualities";
 import { useUser } from "../../../hooks/useUsers";
 
 const EditUserPage = () => {
     const { userId } = useParams();
-    // const {
-    //     isLoading: professionsLoading,
-    //     professions: professionsFromServer,
-    //     getProfession
-    // } = useProfessions();
     const {
-        //     qualities: qualitiesFromServer,
-        getQuality
-        // isLoading: qualitiesLoading
+        isLoading: professionsLoading,
+        professions: professionsFromServer
+    } = useProfessions();
+    const {
+        qualities: qualitiesFromServer,
+        getQuality,
+        isLoading: qualitiesLoading
     } = useQualities();
     const { getUserById } = useUser();
     // const history = useHistory();
@@ -90,25 +88,22 @@ const EditUserPage = () => {
             ),
             profession: user.profession
         }));
-        console.log(data);
-        api.professions.fetchAll().then((data) => {
-            const professionsList = Object.keys(data).map((professionName) => ({
-                label: data[professionName].name,
-                value: data[professionName]._id
-            }));
-            setProfession(professionsList);
-        });
-        api.qualities.fetchAll().then((data) => {
-            const qualitiesList = Object.keys(data).map((optionName) => ({
-                value: data[optionName]._id,
-                label: data[optionName].name,
-                color: data[optionName].color
-            }));
-            setQualities(qualitiesList);
-        });
+        const professionsList = professionsFromServer.map((profession) => ({
+            label: profession.name,
+            value: profession._id
+        }));
+        const qualitiesList = qualitiesFromServer.map((quality) => ({
+            label: quality.name,
+            value: quality._id,
+            color: quality.color
+        }));
+        setProfession(professionsList);
+        setQualities(qualitiesList);
     }, []);
     useEffect(() => {
-        if (data._id) setIsLoading(false);
+        if (data.name && !professionsLoading && !qualitiesLoading) {
+            setIsLoading(false);
+        }
     }, [data]);
 
     const validatorConfig = {
