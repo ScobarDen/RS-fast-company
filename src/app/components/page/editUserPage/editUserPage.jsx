@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import api from "../../../api";
 import TextField from "../../common/form/textField";
@@ -7,10 +7,24 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
+// import { useProfessions } from "../../../hooks/useProfession";
+import { useQualities } from "../../../hooks/useQualities";
+import { useUser } from "../../../hooks/useUsers";
 
 const EditUserPage = () => {
     const { userId } = useParams();
-    const history = useHistory();
+    // const {
+    //     isLoading: professionsLoading,
+    //     professions: professionsFromServer,
+    //     getProfession
+    // } = useProfessions();
+    const {
+        //     qualities: qualitiesFromServer,
+        getQuality
+        // isLoading: qualitiesLoading
+    } = useQualities();
+    const { getUserById } = useUser();
+    // const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({
         name: "",
@@ -49,13 +63,13 @@ const EditUserPage = () => {
         const isValid = validate();
         if (!isValid) return;
         const { profession, qualities } = data;
-        api.users
-            .update(userId, {
-                ...data,
-                profession: getProfessionById(profession),
-                qualities: getQualities(qualities)
-            })
-            .then((data) => history.push(`/users/${data._id}`));
+        // api.users
+        //     .update(userId, {
+        //         ...data,
+        //         profession: getProfessionById(profession),
+        //         qualities: getQualities(qualities)
+        //     })
+        //     .then((data) => history.push(`/users/${data._id}`));
         console.log({
             ...data,
             profession: getProfessionById(profession),
@@ -67,14 +81,16 @@ const EditUserPage = () => {
     };
     useEffect(() => {
         setIsLoading(true);
-        api.users.getById(userId).then(({ profession, qualities, ...data }) =>
-            setData((prevState) => ({
-                ...prevState,
-                ...data,
-                qualities: transformData(qualities),
-                profession: profession._id
-            }))
-        );
+        const user = getUserById(userId);
+        setData((prevState) => ({
+            ...prevState,
+            ...user,
+            qualities: transformData(
+                user.qualities.map((qual) => getQuality(qual))
+            ),
+            profession: user.profession
+        }));
+        console.log(data);
         api.professions.fetchAll().then((data) => {
             const professionsList = Object.keys(data).map((professionName) => ({
                 label: data[professionName].name,
