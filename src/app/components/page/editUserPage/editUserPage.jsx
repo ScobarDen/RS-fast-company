@@ -7,9 +7,14 @@ import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
 import { useProfessions } from "../../../hooks/useProfession";
-import { useQualities } from "../../../hooks/useQualities";
 import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getQualities,
+    getQualitiesByIds,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
 
 const EditUserPage = () => {
     const { userId } = useParams();
@@ -18,12 +23,13 @@ const EditUserPage = () => {
         isLoading: professionsLoading,
         professions: professionsFromServer
     } = useProfessions();
-    const {
-        qualities: qualitiesFromServer,
-        getQuality,
-        isLoading: qualitiesLoading
-    } = useQualities();
+    const qualitiesFromServer = useSelector(getQualities());
+    const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
     const { getUserById } = useUser();
+    const user = getUserById(userId);
+    const qualitiesListToTransform = useSelector(
+        getQualitiesByIds(user.qualities)
+    );
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({
@@ -59,9 +65,7 @@ const EditUserPage = () => {
         setData((prevState) => ({
             ...prevState,
             ...user,
-            qualities: transformData(
-                user.qualities.map((qual) => getQuality(qual))
-            ),
+            qualities: transformData(qualitiesListToTransform),
             profession: user.profession
         }));
         const professionsList = professionsFromServer.map((profession) => ({
