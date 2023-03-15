@@ -30,10 +30,7 @@ const { qualitiesRequested, qualitiesReceived, qualitiesRequestedFailed } =
     actions;
 
 const isOutdated = (date) => {
-    if (Date.now() - date < 10 * 60 * 1000) {
-        return false;
-    }
-    return true;
+    return Date.now() - date >= 10 * 60 * 1000;
 };
 
 export const loadQualitiesList = () => async (dispatch, getState) => {
