@@ -6,15 +6,16 @@ import GroupList from "../../common/groupList";
 import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
+import { getUsersList } from "../../../store/users";
+
 const UsersListPage = () => {
-    const { users } = useUser();
+    const users = useSelector(getUsersList());
     const { currentUser } = useAuth();
     const professionsLoading = useSelector(getProfessionsLoadingStatus());
     const professions = useSelector(getProfessions());
@@ -58,6 +59,7 @@ const UsersListPage = () => {
     const handleSort = (item) => {
         setSortBy(item);
     };
+
     function filterUsers(data) {
         return (
             searchQuery
@@ -77,6 +79,7 @@ const UsersListPage = () => {
                 : data
         ).filter((u) => u._id !== currentUser._id);
     }
+
     if (users) {
         const filteredUsers = filterUsers(users);
         const count = filteredUsers.length;

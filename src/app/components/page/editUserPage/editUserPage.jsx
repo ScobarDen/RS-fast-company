@@ -6,7 +6,6 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import {
@@ -18,6 +17,7 @@ import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
+import { getUserById } from "../../../store/users";
 
 const EditUserPage = () => {
     const { userId } = useParams();
@@ -26,8 +26,7 @@ const EditUserPage = () => {
     const professionsFromServer = useSelector(getProfessions());
     const qualitiesFromServer = useSelector(getQualities());
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
-    const { getUserById } = useUser();
-    const user = getUserById(userId);
+    const user = useSelector(getUserById(userId));
     const qualitiesListToTransform = useSelector(
         getQualitiesByIds(user.qualities)
     );
