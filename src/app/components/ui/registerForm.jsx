@@ -22,12 +22,11 @@ const RegisterForm = () => {
         licence: false
     });
     const qualities = useSelector(getQualities());
-    const professions = useSelector(getProfessions());
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
     }));
-
+    const professions = useSelector(getProfessions());
     const professionsList = professions.map((p) => ({
         label: p.name,
         value: p._id
@@ -95,7 +94,7 @@ const RegisterForm = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -103,7 +102,6 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         };
-
         dispatch(signUp(newData));
     };
 

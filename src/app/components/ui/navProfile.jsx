@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
-export const NavProfile = () => {
-    const { currentUser } = useAuth();
-    const [isOpen, setIsOpen] = useState(false);
+import { useSelector } from "react-redux";
+import { getCurrentUserData } from "../../store/users";
+
+function NavProfile() {
+    const currentUser = useSelector(getCurrentUserData());
+    const [isOpen, setOpen] = useState(false);
     const toggleMenu = () => {
-        setIsOpen((prevState) => !prevState);
+        setOpen((prevState) => !prevState);
     };
+    if (!currentUser) return "Loading...";
     return (
         <div className="dropdown" onClick={toggleMenu}>
             <div className="btn dropdown-toggle d-flex align-items-center">
                 <div className="me-2">{currentUser.name}</div>
                 <img
                     src={currentUser.image}
-                    alt="avatar"
-                    height="30"
+                    alt=""
+                    height="40"
                     className="img-responsive rounded-circle"
                 />
             </div>
-            <div className={`w-100 dropdown-menu ${isOpen ? "show" : ""}`}>
+            <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
                 <Link
                     to={`/users/${currentUser._id}`}
                     className="dropdown-item"
@@ -31,4 +34,6 @@ export const NavProfile = () => {
             </div>
         </div>
     );
-};
+}
+
+export default NavProfile;
