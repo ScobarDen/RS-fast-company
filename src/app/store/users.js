@@ -57,6 +57,12 @@ const usersSlice = createSlice({
             state.isLoggedIn = false;
             state.auth = null;
             state.dataLoaded = false;
+        },
+        userUpdated: (state, action) => {
+            state.entities = action.payload;
+        },
+        userUpdatedFailed: (state, action) => {
+            state.error = action.payload;
         }
     }
 });
@@ -69,7 +75,9 @@ const {
     authRequestSuccess,
     authRequestFailed,
     userCreated,
-    userLoggedOut
+    userLoggedOut,
+    userUpdated,
+    userUpdatedFailed
 } = actions;
 
 const authRequested = createAction("users/authRequested");
@@ -117,6 +125,25 @@ export const signUp =
             dispatch(authRequestFailed(error.message));
         }
     };
+
+export const updateUserData = (data) => async (dispatch, getState) => {
+    try {
+        const { content } = await userService.update(data);
+        const state = getState();
+        const newEntities = state.users.entities.map((user) => {
+            if (user._id === state.users.auth.userId) {
+                user = content;
+            }
+            return user;
+        });
+        dispatch(userUpdated(newEntities));
+        history.push(`/users/${state.users.auth.userId}`);
+        console.log(content);
+    } catch (error) {
+        dispatch(userUpdatedFailed(error.message));
+    }
+};
+
 export const logOut = () => (dispatch) => {
     localStorageService.removeAuthData();
     dispatch(userLoggedOut());
