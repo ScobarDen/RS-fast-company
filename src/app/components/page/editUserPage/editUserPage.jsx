@@ -14,13 +14,13 @@ import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
-import { getCurrentUserData, updateUserData } from "../../../store/users";
+import { getCurrentUserData, updateUser } from "../../../store/users";
 
 const EditUserPage = () => {
-    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const currentUser = useSelector(getCurrentUserData());
+    const dispatch = useDispatch();
     const qualities = useSelector(getQualities());
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
     const qualitiesList = qualities.map((q) => ({
@@ -35,12 +35,12 @@ const EditUserPage = () => {
     }));
     const [errors, setErrors] = useState({});
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
         dispatch(
-            updateUserData({
+            updateUser({
                 ...data,
                 qualities: data.qualities.map((q) => q.value)
             })

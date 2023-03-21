@@ -4,7 +4,7 @@ import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthErrorMessage, login } from "../../store/users";
+import { getAuthErrors, login } from "../../store/users";
 
 const LoginForm = () => {
     const [data, setData] = useState({
@@ -12,7 +12,7 @@ const LoginForm = () => {
         password: "",
         stayOn: false
     });
-    const loginError = useSelector(getAuthErrorMessage());
+    const loginError = useSelector(getAuthErrors());
     const history = useHistory();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});

@@ -1,4 +1,4 @@
-function generateAuthError(message) {
+export function generateAuthError(message) {
     switch (message) {
         case "INVALID_PASSWORD":
             return "Email или пароль введены некорректно";
@@ -8,5 +8,3 @@ function generateAuthError(message) {
             return "Слишком много попыток входа. Попробуйте позже";
     }
 }
-
-export default generateAuthError;
