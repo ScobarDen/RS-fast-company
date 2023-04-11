@@ -1,0 +1,22 @@
+{
+  "name": "rs-fast-company-server",
+  "version": "1.0.0",
+  "description": "Backend on node.js for rs-fast-company",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app.js",
+    "serve": "cross-env NODE_ENV=development nodemon app.js"
+  },
+  "author": "Denis Guschin <gdv-ps@mail.ru>",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3",
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
