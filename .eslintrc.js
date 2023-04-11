@@ -1,6 +1,6 @@
 module.exports = {
     env: {
-        browser: false,
+        browser: true,
         es2021: true
     },
     globals: {
@@ -22,7 +22,7 @@ module.exports = {
             "error",
             { anonymous: "always", named: "never" }
         ],
-        "multiline-ternary": 0,
+        "multiline-ternary": ["off"],
         quotes: [
             "error",
             "double",
