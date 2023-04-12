@@ -17,8 +17,8 @@ process.env.NODE_ENV === "development" &&
 
 async function start() {
   try {
-    console.log(config.get("mongoUri"));
     await mongoose.connect(config.get("mongoUri"));
+    console.log(chalk.green("MongoDB is connected..."));
     app.listen(PORT, () =>
       console.log(chalk.green(`Server has been started on port ${PORT}...`))
     );
