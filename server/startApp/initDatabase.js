@@ -1,7 +1,7 @@
 const professionsMock = require("../mock/professions.json");
 const qualitiesMock = require("../mock/qualities.json");
 const Profession = require("../models/Profession");
-const Quality = require("../models/Quality");
+const Quality = require("../models/Qualitie");
 const chalk = require("chalk");
 
 module.exports = async () => {
