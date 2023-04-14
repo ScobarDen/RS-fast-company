@@ -1,4 +1,6 @@
 {
   "port": 8080,
-  "mongoUri": "mongodb+srv://ScobarDen:7kBdLMFLjuYh8FeD@cluster0.x5tkbhf.mongodb.net/app?retryWrites=true&w=majority"
+  "mongoUri": "mongodb+srv://ScobarDen:7kBdLMFLjuYh8FeD@cluster0.x5tkbhf.mongodb.net/app?retryWrites=true&w=majority",
+  "accessSecret": "super puper secret",
+  "refreshSecret": "super refresh secret"
 }
