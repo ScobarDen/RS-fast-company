@@ -5,6 +5,7 @@ const chalk = require('chalk')
 const cors = require('cors')
 const initDatabase = require('./startUp/initDatabase')
 const routes = require('./routes')
+const path = require("path");
 
 const app = express()
 
@@ -17,26 +18,31 @@ app.use('/api', routes)
 
 const PORT = config.get('port') ?? 8080
 
-// if (process.env.NODE_ENV === 'production') {
-//   console.log('Production')
-// } else {
-//   console.log('Development')
-// }
+if (process.env.NODE_ENV === 'production') {
+    console.log('Production')
+    app.use('/', express.static(path.join(__dirname, 'client')))
+    const indexPath = path.join(__dirname, 'client', 'index.html')
+    app.get('*', async (req, res) => {
+        res.sendFile(indexPath)
+    })
+} else {
+    console.log('Development')
+}
 
 async function start() {
-  try {
-    mongoose.connection.once('open', () => {
-      initDatabase()
-    })
-    await mongoose.connect(config.get('mongoUri'))
-    console.log(chalk.green(`MongoDB connected.`))
-    app.listen(PORT, () =>
-      console.log(chalk.green(`Server has been started on port ${PORT}...`))
-    )
-  } catch (e) {
-    console.log(chalk.red(e.message))
-    process.exit(1)
-  }
+    try {
+        mongoose.connection.once('open', () => {
+            initDatabase()
+        })
+        await mongoose.connect(config.get('mongoUri'))
+        console.log(chalk.green(`MongoDB connected.`))
+        app.listen(PORT, () =>
+            console.log(chalk.green(`Server has been started on port ${PORT}...`))
+        )
+    } catch (e) {
+        console.log(chalk.red(e.message))
+        process.exit(1)
+    }
 }
 
 start()
