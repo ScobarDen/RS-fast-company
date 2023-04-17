@@ -1,13 +1,13 @@
 {
-  "name": "rs-fast-company-server",
+  "name": "jfd-server",
   "version": "1.0.0",
-  "description": "Backend on node.js for rs-fast-company",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node app.js",
     "serve": "cross-env NODE_ENV=development nodemon app.js"
   },
-  "author": "Denis Guschin <gdv-ps@mail.ru>",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

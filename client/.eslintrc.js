@@ -3,9 +3,6 @@ module.exports = {
         browser: true,
         es2021: true
     },
-    globals: {
-        localStorage: true
-    },
     extends: ["plugin:react/recommended", "standard"],
     parserOptions: {
         ecmaFeatures: {
