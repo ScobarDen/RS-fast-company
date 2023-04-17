@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getCurrentUserData } from "../../store/users";
-
-function NavProfile() {
+const NavProfile = () => {
     const currentUser = useSelector(getCurrentUserData());
     const [isOpen, setOpen] = useState(false);
     const toggleMenu = () => {
         setOpen((prevState) => !prevState);
     };
-    if (!currentUser) return "Loading...";
+
+    if (!currentUser) return "loading";
     return (
         <div className="dropdown" onClick={toggleMenu}>
             <div className="btn dropdown-toggle d-flex align-items-center">
@@ -34,6 +34,6 @@ function NavProfile() {
             </div>
         </div>
     );
-}
+};
 
 export default NavProfile;

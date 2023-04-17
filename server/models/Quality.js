@@ -5,8 +5,12 @@ const schema = new Schema({
     type: String,
     required: true
   },
+  color: {
+    type: String,
+    required: true
+  }
 }, {
   timestamps: true
 })
 
-module.exports = model('Profession', schema)
+module.exports = model('Quality', schema)

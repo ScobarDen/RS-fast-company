@@ -1,18 +1,16 @@
-const express = require("express");
-const chalk = require("chalk");
-const Profession = require("../models/Profession");
-const router = express.Router({ mergeParams: true });
+const express = require('express')
+const Profession = require('../models/Profession')
+const router = express.Router({ mergeParams: true })
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const professions = await Profession.find();
-    res.status(200).send(professions);
-  } catch (err) {
-    console.log(chalk.red(`Error: ${err.message}`));
+    const list = await Profession.find()
+    res.status(200).send(list)
+  } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка. Попробуйте позже...",
-    });
+      message: 'На сервере произошла ошибка. Попробуйте позже'
+    })
   }
-});
+})
 
-module.exports = router;
+module.exports = router

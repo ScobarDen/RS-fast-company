@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/validator";
+import { validator } from "../../utils/ validator";
 import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useHistory } from "react-router-dom";
@@ -14,8 +14,9 @@ const LoginForm = () => {
     });
     const loginError = useSelector(getAuthErrors());
     const history = useHistory();
-    const dispatch = useDispatch();
+    const dispath = useDispatch();
     const [errors, setErrors] = useState({});
+
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -23,7 +24,7 @@ const LoginForm = () => {
         }));
     };
 
-    const validatorConfig = {
+    const validatorConfog = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -31,7 +32,7 @@ const LoginForm = () => {
         },
         password: {
             isRequired: {
-                message: "Пароль обязателен для заполнения"
+                message: "Пароль обязателкн для заполнения"
             }
         }
     };
@@ -39,7 +40,7 @@ const LoginForm = () => {
         validate();
     }, [data]);
     const validate = () => {
-        const errors = validator(data, validatorConfig);
+        const errors = validator(data, validatorConfog);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -53,7 +54,7 @@ const LoginForm = () => {
             ? history.location.state.from.pathname
             : "/";
 
-        dispatch(login({ payload: data, redirect }));
+        dispath(login({ payload: data, redirect }));
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -80,10 +81,11 @@ const LoginForm = () => {
                 Оставаться в системе
             </CheckBoxField>
             {loginError && <p className="text-danger">{loginError}</p>}
+
             <button
-                className="btn btn-primary w-100 mx-auto"
                 type="submit"
                 disabled={!isValid}
+                className="btn btn-primary w-100 mx-auto"
             >
                 Submit
             </button>

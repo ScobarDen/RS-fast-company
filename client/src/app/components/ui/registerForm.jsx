@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/validator";
+import { validator } from "../../utils/ validator";
 import TextField from "../common/form/textField";
 import SelectField from "../common/form/selectField";
-import RadioField from "../common/form/radioField";
+import RadioField from "../common/form/radio.Field";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getQualities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
 import { signUp } from "../../store/users";
@@ -21,12 +21,14 @@ const RegisterForm = () => {
         qualities: [],
         licence: false
     });
+
     const qualities = useSelector(getQualities());
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
     }));
     const professions = useSelector(getProfessions());
+
     const professionsList = professions.map((p) => ({
         label: p.name,
         value: p._id
@@ -39,7 +41,7 @@ const RegisterForm = () => {
             [target.name]: target.value
         }));
     };
-    const validatorConfig = {
+    const validatorConfog = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -53,13 +55,13 @@ const RegisterForm = () => {
                 message: "Имя обязательно для заполнения"
             },
             min: {
-                message: "Имя должно состоять минимум из 3 символов",
+                message: "Имя должено состаять миниму из 3 символов",
                 value: 3
             }
         },
         password: {
             isRequired: {
-                message: "Пароль обязателен для заполнения"
+                message: "Пароль обязательна для заполнения"
             },
             isCapitalSymbol: {
                 message: "Пароль должен содержать хотя бы одну заглавную букву"
@@ -68,7 +70,7 @@ const RegisterForm = () => {
                 message: "Пароль должен содержать хотя бы одно число"
             },
             min: {
-                message: "Пароль должен состоять минимум из 8 символов",
+                message: "Пароль должен состаять миниму из 8 символов",
                 value: 8
             }
         },
@@ -80,7 +82,7 @@ const RegisterForm = () => {
         licence: {
             isRequired: {
                 message:
-                    "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
+                    "Вы не можете использовать наш сервис без подтреврждения лицензионного соглашения"
             }
         }
     };
@@ -88,7 +90,7 @@ const RegisterForm = () => {
         validate();
     }, [data]);
     const validate = () => {
-        const errors = validator(data, validatorConfig);
+        const errors = validator(data, validatorConfog);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -132,8 +134,8 @@ const RegisterForm = () => {
             <SelectField
                 label="Выбери свою профессию"
                 defaultOption="Choose..."
-                options={professionsList}
                 name="profession"
+                options={professionsList}
                 onChange={handleChange}
                 value={data.profession}
                 error={errors.profession}
@@ -152,9 +154,8 @@ const RegisterForm = () => {
             <MultiSelectField
                 options={qualitiesList}
                 onChange={handleChange}
-                defaultValue={data.qualities}
                 name="qualities"
-                label="Выберите ваши качества"
+                label="Выберите ваши качесвта"
             />
             <CheckBoxField
                 value={data.licence}
@@ -165,9 +166,9 @@ const RegisterForm = () => {
                 Подтвердить <a>лицензионное соглашение</a>
             </CheckBoxField>
             <button
-                className="btn btn-primary w-100 mx-auto"
                 type="submit"
                 disabled={!isValid}
+                className="btn btn-primary w-100 mx-auto"
             >
                 Submit
             </button>

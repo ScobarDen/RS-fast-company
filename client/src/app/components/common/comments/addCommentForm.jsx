@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextAreaField from "../form/textAreaField";
-import { validator } from "../../../utils/validator";
+import { validator } from "../../../utils/ validator";
 import PropTypes from "prop-types";
 
 const AddCommentForm = ({ onSubmit }) => {
@@ -12,7 +12,7 @@ const AddCommentForm = ({ onSubmit }) => {
             [target.name]: target.value
         }));
     };
-    const validatorConfig = {
+    const validatorConfog = {
         content: {
             isRequired: {
                 message: "Сообщение не может быть пустым"
@@ -21,10 +21,12 @@ const AddCommentForm = ({ onSubmit }) => {
     };
 
     const validate = () => {
-        const errors = validator(data, validatorConfig);
+        const errors = validator(data, validatorConfog);
+
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
+
     const clearForm = () => {
         setData({});
         setErrors({});
@@ -34,8 +36,10 @@ const AddCommentForm = ({ onSubmit }) => {
         const isValid = validate();
         if (!isValid) return;
         onSubmit(data);
+        console.log(data);
         clearForm();
     };
+
     return (
         <div>
             <h2>New comment</h2>
