@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const config = require("config");
+const cors = require("cors");
 const initDatabase = require("./startApp/initDatabase");
 const routes = require("./routes");
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // /api
 app.use("/api", routes);
+app.use(cors());
 
 process.env.NODE_ENV === "production" &&
   console.log(chalk.blue("Production environment"));
