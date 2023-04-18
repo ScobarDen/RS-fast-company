@@ -1,4 +1,4 @@
 {
-    "apiEndpoint": "http://localhost:8080/api",
+    "apiEndpoint": "https://rs-fast-company.onrender.com/api",
     "isFireBase": false
 }
