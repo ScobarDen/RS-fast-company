@@ -1,24 +1,38 @@
 import React from "react";
-import useMockData from "../utils/mockData";
 
 const Main = () => {
-    const { error, initialize, progress, status } = useMockData();
-    const handleClick = () => {
-        initialize();
-    };
     return (
         <div className="container mt-5">
             <h1> Main Page</h1>
-            <h3>Инициализация данных в FireBase</h3>
-            <ul>
-                <li>Status:{status}</li>
-                <li>Progress: {progress}%</li>
-                {error && <li>error: {error}</li>}
-            </ul>
-            <button className="btn btn-primary" onClick={handleClick}>
-                {" "}
-                Инициализировать
-            </button>
+            <br />
+            <h2>README.md</h2>
+            <code>
+                <h3>Fast Company</h3>
+                <hr />
+                <h4>Client</h4>
+                <hr />
+                <p>Здесь находится фронтенд часть проекта</p>
+                <p>
+                    Стэк: <strong>react</strong>, <strong>redux</strong>,
+                    <strong>bootstrap</strong>
+                </p>
+                <h4>Server</h4>
+                <hr />
+                <p>Здесь находится бэкенд часть проекта</p>
+                <p>
+                    Стэк: <strong>nodeJS</strong>, <strong>expressJS</strong>,
+                    <strong>mongoDB</strong>
+                </p>
+                <h4>Dockerfile</h4>
+                <hr />
+                <p>Dockerfile для создания docker контейнеров</p>
+            </code>
+            <a
+                href="https://github.com/ScobarDen/rs-fast-company"
+                className="link-dark h1"
+            >
+                <i className="bi bi-github"></i>
+            </a>
         </div>
     );
 };
